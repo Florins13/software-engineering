@@ -1,0 +1,37 @@
+{#include header}
+{/include}
+    <!-- MAIN-BIKES -->
+    <main style="padding: 20px;">
+        <div style="margin-bottom:10px">
+            <label for="search">Search</label>
+            <input type="text" id="search" name="search">
+        </div>
+        <div style="display: flex;gap: 20px;flex-wrap: wrap;justify-content: space-evenly;">
+            {#for bike in bikes}
+                <div class="bike__box">
+                    <h4>Model: {bike.getModel()}</h4>
+                    <img src="/{bike.getImageSource()}" height="70px" width="70px">
+                    <span>Stock: {bike.getStock()}</span>
+                    <span>Details: {bike.getDetails()}</span>
+                    <span>Electric: {bike.isElectric()}</span>
+                    <span>Price: {bike.getPrice()}€</span>
+                    {#if role is 'BASIC'}
+                        <form action="/cart/add/{bike.getId()}" method="post">
+                        <button {#if !bike.isInStock()} disabled {/if} type="submit">Add to cart</button>
+                        </form>
+                    {/if}
+                    {#if role is 'MANAGER'}
+                        <div style="display: flex;gap: 10px;">
+                            <form action="/bikes/show/{bike.getId()}" method="get">
+                                <button type="submit">Edit</button>
+                            </form>
+                            <button>Delete</button>
+                        </div>
+                    {/if}
+                </div>
+            {/for}
+
+        </div>
+    </main>
+{#include footer}
+{/include}

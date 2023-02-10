@@ -1,0 +1,38 @@
+{#include header}
+{/include}
+
+<div style="display: flex;gap: 20px;flex-wrap: wrap;justify-content: space-evenly;">
+    {#for cartItem in cart.cartItems}
+        <div style="display: flex;gap: 20px;flex-wrap: wrap;justify-content: space-evenly;">
+            <div class="bike__box">
+                <form action="/cart/deleteItem" method="post" style="align-self: end;">
+                    <button name="id" type="submit" value="{cartItem.getId()}" style="width: 25px">X</button>
+                </form>
+                <h4>Model: {cartItem.getBike().getModel()}</h4>
+
+                <img src="/{cartItem.getBike().getImageSource()}" height="70px" width="70px">
+                <span>Stock: {cartItem.getBike().getStock()}</span>
+                <span>Details: {cartItem.getBike().getDetails()}</span>
+                <span>Electric: {cartItem.getBike().isElectric()}</span>
+                <span>Price: {cartItem.getBike().getPrice()}€</span>
+                <div style="display: flex;align-items: center;gap: 20px;">
+                    <form action="/cart/updateQuantity/decrease" method="post">
+                        <button name="id" type="submit" value="{cartItem.getId()}" type="submit" style="width: 85px">Decrease -</button>
+                    </form>
+                    <p>{cartItem.getQuantity()}</p>
+                    <form action="/cart/updateQuantity/increase" method="post">
+                        <button name="id" type="submit" value="{cartItem.getId()}" style="width: 85px">Increase +</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    {/for}
+</div>
+<div style="display: flex;flex-direction: row;justify-content: end;gap: 20px;padding-right: 50px;">
+    <h3>Total: {cart.cartTotal} €</h3>
+    <button {#if cart.cartIsEmpty()} disabled {/if} onclick="goToCheckout()" style="height: 30px;align-self: center;">Checkout</button>
+</div>
+
+{#include footer}
+{/include}

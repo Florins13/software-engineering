@@ -1,0 +1,38 @@
+{#include header}
+{/include}
+<div style="padding-left: 10px">
+    <h3>Order history:</h3>
+    <table style="width: 100%">
+    <tr>
+      <th>Transaction</th>
+      <th>Order state</th>
+      <th>Acquire Type</th>
+      <th>Items:</th>
+      <th>Total</th>
+      <th>Address</th>
+      <th>User</th>
+    </tr>
+    {#for order in orders}
+      <tr>
+      <td>{order.getTransaction()}</td>
+      <td>{order.getOrderState()}</td>
+      <td>{order.getAcquireType()}</td>
+      <td style="display: flex;flex-direction: column;">
+        {#for shipItems in order.getShippingItems()}
+          <span>{shipItems.getQuantity()}x {shipItems.getBike().getModel()}</span>
+        {/for}
+      </td>
+      <td>{order.getTotalPrice()}</td>
+      <td>
+                    <span>{order.getShippingAddress().getFullName()},
+                        {order.getShippingAddress().getAddress()},
+                        {order.getShippingAddress().getTelephone()}.
+                        {order.getShippingAddress().getZipCode()}</span>
+      </td>
+      <td>{order.getUsername()}</td>
+      </tr>
+    {/for}
+    </table>
+</div>
+{#include footer}
+{/include}

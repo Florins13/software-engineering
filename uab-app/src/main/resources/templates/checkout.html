@@ -1,0 +1,54 @@
+{#include header}
+{/include}
+<h1 style="margin-left: 5px">Checkout</h1>
+<div style="padding: 20px;display: flex;justify-content: space-around;">
+
+    <div>
+        <form action="/order/finalise" method="post" style="display: flex;flex-direction: column;align-items: baseline;gap: 5px">
+            <label for="fullName">Full name</label>
+            <input id="fullName" required name="fullName" type="text"/>
+
+            <label for="address">Address</label>
+            <input id="address" required name="address" type="text"/>
+
+            <label for="telephone">Telephone</label>
+            <input id="telephone" required name="telephone" type="number"/>
+
+            <label for="zipCode">Zipcode</label>
+            <input id="zipCode" required name="zipCode" type="text"/>
+            <div>
+                <label for="buy">Buy</label>
+                <input onclick="javascript:rentOption();" checked type="radio" id="buy" name="acquire" value="buy"><br>
+                <label for="rent">Rent for 3 days</label>
+                <input onclick="javascript:rentOption();" type="radio" id="rent" name="acquire" value="rent"><br>
+            </div>
+            <button type="submit" style="align-self: end;">Finalise</button>
+        </form>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <th>Bike</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            {#for cartItem in checkout.cartItems}
+                <tr>
+                    <td>{cartItem.getBike().getModel()}</td>
+                    <td>{cartItem.getQuantity()}</td>
+                    <td>{cartItem.getBike().getPrice()}</td>
+                </tr>
+            {/for}
+            <tr>
+                <td></td>
+                <td style="text-align: end;font-weight: bold">Total:</td>
+                <td id="buy-option" style="font-weight: bold;">{checkout.cartTotal} €</td>
+                <td id="rent-option" style="font-weight: bold;display: none">{checkout.rentTotal} €</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+{#include footer}
+{/include}

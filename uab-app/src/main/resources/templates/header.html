@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" charset="UTF-8" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/uab_style.css">
+<title>UAB</title>
+</head>
+<body style="margin:0px;padding-bottom: 50px;">
+<script>
+    function logOut() {
+        document.cookie = "quarkus-credential= ; Max-Age=0; path=/;"
+        window.location.replace(window.location.origin + "/bikes");
+    }
+    function logIn(){
+        window.location.replace(window.location.origin + "/login");
+    }
+    function goToCart(){
+        window.location.replace(window.location.origin + "/cart");
+    }
+    function goToBikes(){
+        window.location.replace(window.location.origin + "/bikes");
+    }
+    function goToCheckout(){
+        window.location.replace(window.location.origin + "/cart/checkout");
+    }
+    function goToOrders(){
+        window.location.replace(window.location.origin + "/order/history");
+    }
+    function rentOption() {
+        if (document.getElementById('rent').checked) {
+            document.getElementById('rent-option').style.display = 'table-cell';
+            document.getElementById('buy-option').style.display = 'none';
+        } else {
+            document.getElementById('rent-option').style.display = 'none';
+            document.getElementById('buy-option').style.display = 'table-cell';
+        }
+    }
+</script>
+
+<!-- HEADER-NAVBAR -->
+    <header class="header_bar">
+        <div>
+            <img onclick="goToBikes()" src="/bicycle.png" style="cursor: pointer;height:70px;width:70px;">
+        </div>
+        <div onclick="goToBikes()"><h1>UABikes</h1></div>
+        <nav class="nav-style" style="display: flex;align-items: center;">
+            {#if role is 'BASIC'}
+                <div>
+                    <img onclick="goToOrders()" src="/orders.png">
+                </div>
+                <div>
+                    <img onclick="goToCart()" src="/shopping-cart.png">
+                </div>
+                <div>
+                    <img onclick="logOut()" src="/logout.png">
+                </div>
+            {#else if role is 'MANAGER'}
+                <div>
+                    <img onclick="logOut()" src="/logout.png">
+                </div>
+            {#else}
+                <div>
+                    <img onclick="logIn()" src="/login.png">
+                </div>
+                <div>
+                    <img src="/add-user.png">
+                </div>
+            {/if}
+        </nav>
+    </header>

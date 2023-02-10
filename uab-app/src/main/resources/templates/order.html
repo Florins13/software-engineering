@@ -1,0 +1,38 @@
+{#include header}
+{/include}
+<div style="padding-left: 10px">
+    {#if role is 'BASIC'}
+        <h3>Order was placed. The new order is:</h3>
+        <table style="width: 100%">
+            <tr>
+                <th>Transaction</th>
+                <th>Order state</th>
+                <th>Acquire Type</th>
+                <th>Items:</th>
+                <th>Total</th>
+                <th>Address</th>
+                <th>User</th>
+            </tr>
+            <tr>
+                <td>{newOrder.getTransaction()}</td>
+                <td>{newOrder.getOrderState()}</td>
+                <td>{newOrder.getAcquireType()}</td>
+                <td style="display: flex;flex-direction: column;">
+                    {#for item in newOrder.getShippingItems()}
+                        <span>{item.getQuantity()}x - {item.getBike().getModel()}</span>
+                    {/for}
+                </td>
+                <td>{newOrder.getTotalPrice()}</td>
+                <td>
+                    <span>{newOrder.getShippingAddress().getFullName()},
+                        {newOrder.getShippingAddress().getAddress()},
+                        {newOrder.getShippingAddress().getTelephone()}.
+                        {newOrder.getShippingAddress().getZipCode()}</span>
+                </td>
+                <td>{newOrder.getUsername()}</td>
+            </tr>
+        </table>
+    {/if}
+</div>
+{#include footer}
+{/include}
