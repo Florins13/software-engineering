@@ -1,14 +1,4 @@
 # uab-app Project
-
-To run this project java jdk is needed along maven:
-Run in the console:
-```shell script
-java -version
-```
-If java exists you can proceed to next step and run quarkus in dev mode.
-If you dont have java installed you can follow the steps here:
-https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-22-04
-
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
@@ -37,18 +27,17 @@ To run a single class test:
 ```
 ## To test the application using postgres check the following:
 Make sure you have docker installed.
-In application.properties file in src/main/resources folder do the following:
-1. Uncomment quarkus.datasource.db-kind = postgresql
-This line quarkus.datasource.db-kind says what type of db should be used.
-2. Comment the following line quarkus.datasource.jdbc.url = jdbc:h2:mem:uabdb 
-3. If a connection to database to check the tables is desired do the following: 
+In application.properties file in src/main/resources folder:
+1. Uncomment quarkus.datasource.db-kind = postgresql in order to use postgres db
+2. Comment quarkus.datasource.jdbc.url = jdbc:h2:mem:uabdb to stop using in memory db.
+3. To connect to the db and check the tables the following config can be used: 
 - uncomment quarkus.datasource.devservices.port=49161
-- After that you need to connect using the following information:
 - host-> localhost
 - port-> 49161
 - user-> quarkus
 - password -> quarkus
 - URL -> jdbc:postgresql://localhost:49161/quarkus
+- 
 ## Packaging and running the application
 
 The application can be packaged using:
@@ -110,3 +99,19 @@ Easily start your RESTful Web Services
 Create your web page using Quarkus RESTEasy & Qute
 
 [Related guide section...](https://quarkus.io/guides/qute#type-safe-templates)
+
+
+### Basic User view:
+![alt text](../Project%20Images/Basic%20user%20-%20bikes%20view.png)
+![alt text](../Project%20Images/Basic%20user%20-%20cart%20view.png)
+![alt text](../Project%20Images/Basic%20user%20-%20buy%20checkout%20view.png)
+
+![alt text](../Project%20Images/Basic%20user%20-%20order%20view.png)
+![alt text](../Project%20Images/Basic%20user%20-%20bikes%20view%20after%20order%20placed.png)
+![alt text](../Project%20Images/Basic%20user%20-%20order%20history%20view.png)
+
+### Manager view:
+![alt text](../Project%20Images/Manager%20-%20bike%20view.png)
+![alt text](../Project%20Images/Manager%20-%20edit%20bike%20view.png)
+![alt text](../Project%20Images/Manager%20-%20after%20edit%20update,%20view.png)
+
