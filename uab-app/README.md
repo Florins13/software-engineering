@@ -101,6 +101,7 @@ Create your web page using Quarkus RESTEasy & Qute
 [Related guide section...](https://quarkus.io/guides/qute#type-safe-templates)
 
 ---
+## Project views
 ### Basic User view:
 ![alt text](../Project%20Images/Basic%20user%20-%20bikes%20view.png)
 ![alt text](../Project%20Images/Basic%20user%20-%20cart%20view.png)
@@ -110,6 +111,8 @@ Create your web page using Quarkus RESTEasy & Qute
 ![alt text](../Project%20Images/Basic%20user%20-%20bikes%20view%20after%20order%20placed.png)
 ![alt text](../Project%20Images/Basic%20user%20-%20order%20history%20view.png)
 ---
+<pre>
+</pre>
 ### Manager view:
 ![alt text](../Project%20Images/Manager%20-%20bike%20view.png)
 ![alt text](../Project%20Images/Manager%20-%20edit%20bike%20view.png)
