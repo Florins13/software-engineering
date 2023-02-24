@@ -25,19 +25,18 @@ To run a single class test:
 ```shell script
 ./mvnw -Dtest=ClassName test
 ```
-## To test the application using postgres check the following:
+## To test the application using postgres
 Make sure you have docker installed.
-In application.properties file in src/main/resources folder:
-1. Uncomment quarkus.datasource.db-kind = postgresql in order to use postgres db
-2. Comment quarkus.datasource.jdbc.url = jdbc:h2:mem:uabdb to stop using in memory db.
-3. To connect to the db and check the tables the following config can be used: 
-- uncomment quarkus.datasource.devservices.port=49161
+In <em>application.properties</em> file in src/main/resources folder:
+1. Uncomment <em>quarkus.datasource.db-kind = postgresql</em> in order to use postgres database.
+2. Comment <em>quarkus.datasource.jdbc.url = jdbc:h2:mem:uabdb</em> to stop using in memory database.
+3. If you wish to check the tables, uncomment <em>quarkus.datasource.devservices.port=49161</em> and use the following configuration for connection:
 - host-> localhost
 - port-> 49161
 - user-> quarkus
 - password -> quarkus
 - URL -> jdbc:postgresql://localhost:49161/quarkus
-- 
+
 ## Packaging and running the application
 
 The application can be packaged using:
@@ -100,7 +99,7 @@ Create your web page using Quarkus RESTEasy & Qute
 
 [Related guide section...](https://quarkus.io/guides/qute#type-safe-templates)
 
----
+
 ## Project views
 ### Basic User view:
 ![alt text](../Project%20Images/Basic%20user%20-%20bikes%20view.png)
@@ -111,8 +110,8 @@ Create your web page using Quarkus RESTEasy & Qute
 ![alt text](../Project%20Images/Basic%20user%20-%20bikes%20view%20after%20order%20placed.png)
 ![alt text](../Project%20Images/Basic%20user%20-%20order%20history%20view.png)
 ---
-<pre>
-</pre>
+>
+
 ### Manager view:
 ![alt text](../Project%20Images/Manager%20-%20bike%20view.png)
 ![alt text](../Project%20Images/Manager%20-%20edit%20bike%20view.png)
