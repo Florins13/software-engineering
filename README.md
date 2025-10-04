@@ -1,2 +1,2 @@
 # Software Engineering
-Backend as REST API with some simplifications to aid some tests.
+Backend as split as API for clients with some simplifications to aid some tests.
