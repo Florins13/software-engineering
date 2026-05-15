@@ -3,7 +3,7 @@ package com.dev.cart.model;
 import java.math.BigDecimal;
 
 public class CartItem {
-    private Long bikeId;
+    private Long id;
     private String model;
     private String imageSource;
     private BigDecimal price;
@@ -12,20 +12,20 @@ public class CartItem {
     public CartItem() {
     }
 
-    public CartItem(Long bikeId, String model, String imageSource, BigDecimal price, int quantity) {
-        this.bikeId = bikeId;
+    public CartItem(Long id, String model, String imageSource, BigDecimal price, int quantity) {
+        this.id = id;
         this.model = model;
         this.imageSource = imageSource;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public Long getBikeId() {
-        return bikeId;
+    public Long getId() {
+        return id;
     }
 
-    public void setBikeId(Long bikeId) {
-        this.bikeId = bikeId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getModel() {

@@ -62,7 +62,7 @@ public class CartService {
         );
         Cart cart = getCart(userId);
         Optional<CartItem> existing = cart.getItems().stream()
-                .filter(item -> item.getBikeId().equals(newItem.getBikeId()))
+                .filter(item -> item.getId().equals(newItem.getId()))
                 .findFirst();
 
         if (existing.isPresent()) {
@@ -73,16 +73,16 @@ public class CartService {
         saveCart(userId, cart);
     }
 
-    public void deleteCartItem(String userId, Long bikeId) {
+    public void deleteCartItem(String userId, Long productId) {
         Cart cart = getCart(userId);
-        cart.getItems().removeIf(item -> item.getBikeId().equals(bikeId));
+        cart.getItems().removeIf(item -> item.getId().equals(productId));
         saveCart(userId, cart);
     }
 
-    public void updateQuantity(String userId, Long bikeId, String type) {
+    public void updateQuantity(String userId, Long productId, String type) {
         Cart cart = getCart(userId);
         cart.getItems().stream()
-                .filter(item -> item.getBikeId().equals(bikeId))
+                .filter(item -> item.getId().equals(productId))
                 .findFirst()
                 .ifPresent(item -> {
                     if ("increase".equals(type)) {

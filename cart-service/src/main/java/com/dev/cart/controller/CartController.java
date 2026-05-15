@@ -34,19 +34,19 @@ public class CartController {
     }
 
     @POST
-    @Path("/delete/{bikeId}")
-    public Response deleteCartItem(@HeaderParam("X-User-Id") String userId, @PathParam("bikeId") Long bikeId) {
-        cartService.deleteCartItem(resolveUser(userId), bikeId);
+    @Path("/delete/{id}")
+    public Response deleteCartItem(@HeaderParam("X-User-Id") String userId, @PathParam("id") Long productId) {
+        cartService.deleteCartItem(resolveUser(userId), productId);
         return Response.ok().build();
     }
 
     @POST
-    @Path("/updateQuantity/{bikeId}/{type}")
+    @Path("/updateQuantity/{id}/{type}")
     public Response updateQuantity(
             @HeaderParam("X-User-Id") String userId,
-            @PathParam("bikeId") Long bikeId,
+            @PathParam("id") Long productId,
             @PathParam("type") String type) {
-        cartService.updateQuantity(resolveUser(userId), bikeId, type);
+        cartService.updateQuantity(resolveUser(userId), productId, type);
         return Response.ok().build();
     }
 

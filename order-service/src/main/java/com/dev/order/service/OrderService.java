@@ -1,7 +1,6 @@
 package com.dev.order.service;
 
 import com.dev.cart.client.CartDTO;
-import com.dev.cart.client.CartItemDTO;
 import com.dev.order.model.*;
 import com.dev.order.repository.OrderRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -36,7 +35,7 @@ public class OrderService {
             throw new Exception("Your cart is empty, please add items and try again!");
         }
 
-        AcquireType acquire = "rent".equals(acquireType) ? AcquireType.RENT : AcquireType.BUY;
+        AcquireType acquire = AcquireType.RENT.name().equalsIgnoreCase(acquireType) ? AcquireType.RENT : AcquireType.BUY;
         BigDecimal totalPrice = calculatePrice(cartDTO, acquire);
 
         ShippingAddress shippingAddress = new ShippingAddress(fullName, address, telephone, zipCode);
@@ -44,7 +43,7 @@ public class OrderService {
 
         List<ShippingItem> shippingItems = cartDTO.cartItems.stream()
                 .map(item -> {
-                    ShippingItem si = new ShippingItem(item.bikeId, item.model, item.price, item.quantity);
+                    ShippingItem si = new ShippingItem(item.id, item.model, item.price, item.quantity);
                     si.setOrder(order);
                     return si;
                 })
