@@ -1,0 +1,9 @@
+com/dev/bike/model/Product.class
+com/dev/bike/event/StockReservationConsumer.class
+com/dev/bike/model/Bike.class
+com/dev/bike/repository/BikeRepository.class
+com/dev/bike/controller/dto/BikeDTO.class
+com/dev/bike/event/StockReservationConsumer$ReservedItem.class
+com/dev/bike/controller/BikeController.class
+com/dev/bike/Startup.class
+com/dev/bike/service/BikeService.class
