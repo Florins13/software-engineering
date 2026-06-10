@@ -1,20 +1,10 @@
 package com.dev.bike.repository;
 
 import com.dev.bike.model.Bike;
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
-import io.quarkus.panache.common.Sort;
-import jakarta.enterprise.context.ApplicationScoped;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-@ApplicationScoped
-public class BikeRepository implements PanacheRepository<Bike> {
-
-    public Bike getBikeById(Long id) {
-        return this.findById(id);
-    }
-
-    public List<Bike> getAllBikes() {
-        return this.findAll(Sort.by("id")).list();
-    }
+public interface BikeRepository extends JpaRepository<Bike, Long> {
+    List<Bike> findAllByOrderByIdAsc();
 }

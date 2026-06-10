@@ -1,0 +1,30 @@
+<main>
+    <div class="search-container">
+        <label for="search">Search</label>
+        <input type="text" id="search" name="search"/>
+    </div>
+
+    <div th:if="${#lists.isEmpty(bikes)}">
+        <p>There are no bikes.</p>
+    </div>
+
+    <div class="bikes-container">
+        <div th:each="bike : ${bikes}" class="bike-card">
+            <h4>Model: <span th:text="${bike.model}">Bike Model</span></h4>
+            <img th:src="@{'http://localhost:8081/images/' + ${bike.imageSource}}" alt="Bike Image"/>
+            <span>Stock: <span th:text="${bike.availableStock}">0</span></span>
+            <span>Details: <span th:text="${bike.details}">Details</span></span>
+            <span>Electric: <span th:text="${bike.electric}">false</span></span>
+            <span>Price: <span th:text="${bike.price}">0.0</span>€</span>
+
+            <div class="button-group">
+                <div th:if="${bike.inStock}">
+                    <button th:mfe-id="${bike.id}">Add to cart</button>
+                </div>
+                <div th:unless="${bike.inStock}">
+                    <button>Out of stock</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

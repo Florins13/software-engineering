@@ -4,36 +4,34 @@ import com.dev.bike.service.BikeService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
-import org.eclipse.microprofile.reactive.messaging.Incoming;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ApplicationScoped
+@Component
 public class StockReservationConsumer {
 
-    private static final Logger LOG = Logger.getLogger(StockReservationConsumer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StockReservationConsumer.class);
 
-    @Inject
-    BikeService bikeService;
+    private final BikeService bikeService;
+    private final ObjectMapper objectMapper;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
-    @Inject
-    ObjectMapper objectMapper;
+    public StockReservationConsumer(BikeService bikeService, ObjectMapper objectMapper,
+                                    KafkaTemplate<String, String> kafkaTemplate) {
+        this.bikeService = bikeService;
+        this.objectMapper = objectMapper;
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
-    @Channel("stock-reserved")
-    Emitter<String> stockReservedEmitter;
-
-    @Channel("stock-insufficient")
-    Emitter<String> stockInsufficientEmitter;
-
-    @Incoming("stock-reserve")
+    @KafkaListener(topics = "stock.reserve", groupId = "bike-service")
     public void onStockReserve(String payload) {
-        LOG.infof("Received stock.reserve event: %s", payload);
+        LOG.info("Received stock.reserve event: {}", payload);
         try {
             JsonNode root = objectMapper.readTree(payload);
             String orderId = root.get("orderId").asText();
@@ -47,14 +45,14 @@ public class StockReservationConsumer {
                 long bikeId = item.get("bikeId").asLong();
                 int quantity = item.get("quantity").asInt();
 
-                LOG.infof("Attempting to reserve bikeId=%d, quantity=%d", bikeId, quantity);
+                LOG.info("Attempting to reserve bikeId={}, quantity={}", bikeId, quantity);
                 if (bikeService.reserveStock(bikeId, quantity)) {
                     reserved.add(new ReservedItem(bikeId, quantity));
-                    LOG.infof("Reserved bikeId=%d successfully", bikeId);
+                    LOG.info("Reserved bikeId={} successfully", bikeId);
                 } else {
                     allReserved = false;
                     failureReason = "Insufficient stock for bike ID " + bikeId;
-                    LOG.warnf("Failed to reserve bikeId=%d: %s", bikeId, failureReason);
+                    LOG.warn("Failed to reserve bikeId={}: {}", bikeId, failureReason);
                     break;
                 }
             }
@@ -63,8 +61,8 @@ public class StockReservationConsumer {
                 ObjectNode response = objectMapper.createObjectNode();
                 response.put("orderId", orderId);
                 response.put("success", true);
-                stockReservedEmitter.send(objectMapper.writeValueAsString(response));
-                LOG.infof("Published stock.reserved for order %s", orderId);
+                kafkaTemplate.send("stock.reserved", objectMapper.writeValueAsString(response));
+                LOG.info("Published stock.reserved for order {}", orderId);
             } else {
                 for (ReservedItem ri : reserved) {
                     bikeService.releaseStock(ri.bikeId, ri.quantity);
@@ -73,17 +71,17 @@ public class StockReservationConsumer {
                 response.put("orderId", orderId);
                 response.put("success", false);
                 response.put("reason", failureReason);
-                stockInsufficientEmitter.send(objectMapper.writeValueAsString(response));
-                LOG.warnf("Published stock.insufficient for order %s: %s", orderId, failureReason);
+                kafkaTemplate.send("stock.insufficient", objectMapper.writeValueAsString(response));
+                LOG.warn("Published stock.insufficient for order {}: {}", orderId, failureReason);
             }
         } catch (Exception e) {
-            LOG.errorf(e, "Error processing stock.reserve event");
+            LOG.error("Error processing stock.reserve event", e);
         }
     }
 
-    @Incoming("stock-release")
+    @KafkaListener(topics = "stock.release", groupId = "bike-service")
     public void onStockRelease(String payload) {
-        LOG.infof("Received stock.release event: %s", payload);
+        LOG.info("Received stock.release event: {}", payload);
         try {
             JsonNode root = objectMapper.readTree(payload);
             JsonNode items = root.get("items");
@@ -95,13 +93,13 @@ public class StockReservationConsumer {
             }
             LOG.info("Stock released successfully");
         } catch (Exception e) {
-            LOG.errorf(e, "Error processing stock.release event");
+            LOG.error("Error processing stock.release event", e);
         }
     }
 
-    @Incoming("stock-confirm")
+    @KafkaListener(topics = "stock.confirm", groupId = "bike-service")
     public void onStockConfirm(String payload) {
-        LOG.infof("Received stock.confirm event: %s", payload);
+        LOG.info("Received stock.confirm event: {}", payload);
         try {
             JsonNode root = objectMapper.readTree(payload);
             JsonNode items = root.get("items");
@@ -111,9 +109,9 @@ public class StockReservationConsumer {
                 int quantity = item.get("quantity").asInt();
                 bikeService.confirmReservation(bikeId, quantity);
             }
-            LOG.infof("Stock confirmed for order: %s", root.get("orderId").asText());
+            LOG.info("Stock confirmed for order: {}", root.get("orderId").asText());
         } catch (Exception e) {
-            LOG.errorf(e, "Error processing stock.confirm event");
+            LOG.error("Error processing stock.confirm event", e);
         }
     }
 

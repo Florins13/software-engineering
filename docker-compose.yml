@@ -81,13 +81,13 @@ services:
       dockerfile: Dockerfile
     container_name: bike-service
     ports:
-      - "8085:8081"
+      - "8081:8081"
       - "5005:5005"
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
-      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgres-bike:5432/bike_db
-      QUARKUS_DATASOURCE_USERNAME: postgres
-      QUARKUS_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-bike:5432/bike_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
       JAVA_DEBUG_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
     depends_on:
       kafka:
@@ -107,17 +107,20 @@ services:
       dockerfile: Dockerfile
     container_name: cart-service
     ports:
-      - "8086:8082"
+      - "8082:8082"
       - "5006:5005"
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       QUARKUS_REDIS_HOSTS: redis://redis:6379
       JAVA_DEBUG_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
       QUARKUS_REST_CLIENT__BIKE_SERVICE__URL: http://bike-service:8081
+      BIKE_IMAGE_BASE_URL: http://localhost:8082
     depends_on:
       kafka:
         condition: service_healthy
       redis:
+        condition: service_healthy
+      bike-service:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8082/cart -H 'X-User-Id: healthcheck' || exit 1"]
@@ -132,7 +135,7 @@ services:
       dockerfile: Dockerfile
     container_name: order-service
     ports:
-      - "8087:8083"
+      - "8083:8083"
       - "5007:5005"
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
@@ -147,4 +150,10 @@ services:
       postgres-order:
         condition: service_healthy
       cart-service:
-        condition: service_started
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8083/order/history -H 'X-User-Id: healthcheck' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s

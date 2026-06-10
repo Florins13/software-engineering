@@ -6,11 +6,11 @@ RUN --mount=type=cache,target=/root/.m2 mvn dependency:go-offline -B
 
 COPY src ./src
 
-RUN --mount=type=cache,target=/root/.m2 mvn clean package -DskipTests -Dquarkus.package.jar.type=fast-jar
+RUN --mount=type=cache,target=/root/.m2 mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY --from=build /app/target/quarkus-app/ ./
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8081 5005
 ENV JAVA_DEBUG_OPTS=""
-CMD java ${JAVA_DEBUG_OPTS} -jar quarkus-run.jar
+CMD java ${JAVA_DEBUG_OPTS} -jar app.jar

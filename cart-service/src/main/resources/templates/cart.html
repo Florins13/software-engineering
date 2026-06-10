@@ -1,0 +1,39 @@
+<div class="cart-container">
+    {#for cartItem in cart.cartItems}
+        <div class="cart-item">
+            <div class="bike-box">
+                <button id="deleteCartItem"
+                        class="btn btn-delete"
+                        value="{cartItem.id}">X</button>
+
+                <h4>Model: {cartItem.model}</h4>
+
+                <img src="{bikeImageBase}{cartItem.imageSource}" class="bike-img">
+
+                <span>Stock: {cartItem.quantity}</span>
+                <span>Price: {cartItem.price}€</span>
+
+                <div class="quantity-group">
+                    <button id="decreaseQuantity"
+                            class="btn btn-qty"
+                            value="{cartItem.id}">Decrease -</button>
+
+                    <p>{cartItem.quantity}</p>
+
+                    <button id="increaseQuantity"
+                            class="btn btn-qty"
+                            value="{cartItem.id}">Increase +</button>
+                </div>
+            </div>
+        </div>
+    {/for}
+</div>
+
+<div class="cart-summary">
+    <h3>Total: {cart.cartTotal} €</h3>
+    <button id="triggerOrder"
+            class="btn btn-checkout"
+    {#if cart.cartIsEmpty} disabled {/if}>
+        Checkout
+    </button>
+</div>

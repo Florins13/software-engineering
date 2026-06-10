@@ -1,0 +1,42 @@
+/* Layout */
+main {
+    padding: 20px;
+}
+
+.search-container {
+    margin-bottom: 10px;
+}
+
+.bikes-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+/* Bike card */
+.bike-card {
+    height: 300px;
+    width: 300px;
+    background-color: #dbe7d6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 25px;
+}
+
+.bike-card img {
+    width: 70px;
+    height: 70px;
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    cursor: pointer;
+}

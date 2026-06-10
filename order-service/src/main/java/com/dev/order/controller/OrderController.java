@@ -6,6 +6,7 @@ import com.dev.order.model.Order;
 import com.dev.order.model.ShippingItem;
 import com.dev.order.service.OrderSagaOrchestrator;
 import com.dev.order.service.OrderService;
+import com.dev.order.view.OrderView;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -63,6 +64,18 @@ public class OrderController {
                 .map(OrderDTO::new)
                 .collect(Collectors.toList());
         return Response.ok(orders).build();
+    }
+
+    @GET
+    @Path("/history/view")
+    @Produces(MediaType.TEXT_HTML)
+    public Response getOrdersHtml(@HeaderParam("X-User-Id") String userId) {
+        String user = userId != null ? userId : "anonymous";
+        List<OrderDTO> orders = orderService.getOrdersByUserId(user).stream()
+                .map(OrderDTO::new)
+                .collect(Collectors.toList());
+        String html = OrderView.orderHistoryView.render(orders);
+        return Response.ok(html).build();
     }
 
     @GET
