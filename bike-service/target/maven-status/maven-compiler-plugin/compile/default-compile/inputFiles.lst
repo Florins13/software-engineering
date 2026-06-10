@@ -1,8 +1,0 @@
-/Users/ctw00585/jonas-projects/software-engineering/bike-service/src/main/java/com/dev/bike/Startup.java
-/Users/ctw00585/jonas-projects/software-engineering/bike-service/src/main/java/com/dev/bike/controller/BikeController.java
-/Users/ctw00585/jonas-projects/software-engineering/bike-service/src/main/java/com/dev/bike/controller/dto/BikeDTO.java
-/Users/ctw00585/jonas-projects/software-engineering/bike-service/src/main/java/com/dev/bike/event/StockReservationConsumer.java
-/Users/ctw00585/jonas-projects/software-engineering/bike-service/src/main/java/com/dev/bike/model/Bike.java
-/Users/ctw00585/jonas-projects/software-engineering/bike-service/src/main/java/com/dev/bike/model/Product.java
-/Users/ctw00585/jonas-projects/software-engineering/bike-service/src/main/java/com/dev/bike/repository/BikeRepository.java
-/Users/ctw00585/jonas-projects/software-engineering/bike-service/src/main/java/com/dev/bike/service/BikeService.java

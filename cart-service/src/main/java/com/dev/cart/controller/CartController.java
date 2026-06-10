@@ -25,11 +25,11 @@ public class CartController {
     }
 
     @POST
-    @Path("/add")
+    @Path("/add/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addToCart(@HeaderParam("X-User-Id") String userId, ProductDTO request) {
-        cartService.addToCart(resolveUser(userId), request);
+    public Response addToCart(@HeaderParam("X-User-Id") String userId, @PathParam("id") Long productId) {
+        cartService.addToCart(resolveUser(userId), productId);
         return Response.ok().build();
     }
 

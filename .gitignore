@@ -1,1 +1,4 @@
 .idea
+bike-service/target
+cart-service/target
+order-service/target

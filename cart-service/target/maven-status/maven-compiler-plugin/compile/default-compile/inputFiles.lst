@@ -1,8 +1,0 @@
-/Users/ctw00585/jonas-projects/software-engineering/cart-service/src/main/java/com/dev/cart/controller/CartController.java
-/Users/ctw00585/jonas-projects/software-engineering/cart-service/src/main/java/com/dev/cart/controller/dto/AddToCartRequest.java
-/Users/ctw00585/jonas-projects/software-engineering/cart-service/src/main/java/com/dev/cart/controller/dto/CartDTO.java
-/Users/ctw00585/jonas-projects/software-engineering/cart-service/src/main/java/com/dev/cart/controller/dto/CheckoutDTO.java
-/Users/ctw00585/jonas-projects/software-engineering/cart-service/src/main/java/com/dev/cart/event/CartEventConsumer.java
-/Users/ctw00585/jonas-projects/software-engineering/cart-service/src/main/java/com/dev/cart/model/Cart.java
-/Users/ctw00585/jonas-projects/software-engineering/cart-service/src/main/java/com/dev/cart/model/CartItem.java
-/Users/ctw00585/jonas-projects/software-engineering/cart-service/src/main/java/com/dev/cart/service/CartService.java

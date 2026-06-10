@@ -1,7 +1,10 @@
 package com.dev.cart.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.math.BigDecimal;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductDTO {
     private Long id;
     private String model;

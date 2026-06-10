@@ -9,6 +9,9 @@ import io.quarkus.redis.datasource.RedisDataSource;
 import io.quarkus.redis.datasource.value.ValueCommands;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.NotFoundException;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -24,6 +27,10 @@ public class CartService {
 
     @Inject
     ObjectMapper objectMapper;
+
+    @Inject
+    @RestClient
+    BikeRestClient bikeRestClient;
 
     public CartService(RedisDataSource redisDataSource) {
         this.valueCommands = redisDataSource.value(String.class, String.class);
@@ -52,12 +59,21 @@ public class CartService {
         }
     }
 
-    public void addToCart(String userId, ProductDTO productDTO) {
+    public void addToCart(String userId, Long id) {
+        if (id == null) {
+            throw new BadRequestException("A bike id is required to add an item to the cart");
+        }
+
+        ProductDTO bike = bikeRestClient.getBikeById(id);
+        if (bike == null) {
+            throw new NotFoundException("Bike with id " + id + " was not found");
+        }
+
         CartItem newItem = new CartItem(
-                productDTO.getId(),
-                productDTO.getModel(),
-                productDTO.getImageSource(),
-                productDTO.getPrice(),
+                bike.getId(),
+                bike.getModel(),
+                bike.getImageSource(),
+                bike.getPrice(),
                 1
         );
         Cart cart = getCart(userId);
