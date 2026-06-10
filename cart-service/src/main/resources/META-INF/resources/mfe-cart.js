@@ -9,7 +9,8 @@ mfe('mfe2', ({ root, triggerMfeEvent, listenMfeEvent, reloadMfe, mfeEvents }) =>
 
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
-            finalizeOrder().then(() => triggerMfeEvent('trigger order event', {type: mfeEvents.RELOAD}));
+            // finalizeOrder().then(() => triggerMfeEvent('trigger order event', {type: mfeEvents.RELOAD}));
+            window.location.href = '/checkout';
         });
     }
     if (increaseQuantity && decreaseQuantity && deleteCartItem) {

@@ -1,30 +1,19 @@
-<main>
-    <div class="search-container">
+<main style="padding: 20px;">
+    <div style="margin-bottom:10px">
         <label for="search">Search</label>
-        <input type="text" id="search" name="search"/>
+        <input id="search" type="text" placeholder="Search bikes..."/>
     </div>
 
-    <div th:if="${#lists.isEmpty(bikes)}">
-        <p>There are no bikes.</p>
-    </div>
-
-    <div class="bikes-container">
-        <div th:each="bike : ${bikes}" class="bike-card">
+    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-evenly;">
+        <div th:each="bike : ${bikes}" class="bike__box">
             <h4>Model: <span th:text="${bike.model}">Bike Model</span></h4>
-            <img th:src="@{'http://localhost:8081/images/' + ${bike.imageSource}}" alt="Bike Image"/>
+            <img th:src="@{'http://localhost:8081/images/' + ${bike.imageSource}}" height="70" width="70" th:alt="${bike.model}"/>
             <span>Stock: <span th:text="${bike.availableStock}">0</span></span>
             <span>Details: <span th:text="${bike.details}">Details</span></span>
-            <span>Electric: <span th:text="${bike.electric}">false</span></span>
+            <span>Electric: <span th:text="${bike.electric} ? 'Yes' : 'No'">No</span></span>
             <span>Price: <span th:text="${bike.price}">0.0</span>€</span>
 
-            <div class="button-group">
-                <div th:if="${bike.inStock}">
-                    <button th:mfe-id="${bike.id}">Add to cart</button>
-                </div>
-                <div th:unless="${bike.inStock}">
-                    <button>Out of stock</button>
-                </div>
-            </div>
+            <button th:disabled="${!bike.inStock}" th:attr="mfe-id=${bike.id}">Add to cart</button>
         </div>
     </div>
 </main>

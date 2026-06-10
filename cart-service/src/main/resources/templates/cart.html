@@ -1,39 +1,29 @@
-<div class="cart-container">
+<div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-evenly; width: 250px;">
+    Your Cart:
     {#for cartItem in cart.cartItems}
-        <div class="cart-item">
-            <div class="bike-box">
-                <button id="deleteCartItem"
-                        class="btn btn-delete"
-                        value="{cartItem.id}">X</button>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-evenly;">
+            <div class="bike__box">
+                <button id="deleteCartItem" style="width: 25px; align-self: end;" value="{cartItem.id}">X</button>
 
-                <h4>Model: {cartItem.model}</h4>
+                <h4 style="text-align: center;">Model: {cartItem.model}</h4>
 
-                <img src="{bikeImageBase}{cartItem.imageSource}" class="bike-img">
+                <img src="{bikeImageBase}{cartItem.imageSource}" height="70" width="70" alt="{cartItem.model}">
 
-                <span>Stock: {cartItem.quantity}</span>
                 <span>Price: {cartItem.price}€</span>
 
-                <div class="quantity-group">
-                    <button id="decreaseQuantity"
-                            class="btn btn-qty"
-                            value="{cartItem.id}">Decrease -</button>
-
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <button id="decreaseQuantity" value="{cartItem.id}">-</button>
                     <p>{cartItem.quantity}</p>
-
-                    <button id="increaseQuantity"
-                            class="btn btn-qty"
-                            value="{cartItem.id}">Increase +</button>
+                    <button id="increaseQuantity" value="{cartItem.id}">+</button>
                 </div>
             </div>
         </div>
     {/for}
 </div>
 
-<div class="cart-summary">
+<div style="display: flex; flex-direction: row; justify-content: center; gap: 5px;">
     <h3>Total: {cart.cartTotal} €</h3>
-    <button id="triggerOrder"
-            class="btn btn-checkout"
-    {#if cart.cartIsEmpty} disabled {/if}>
+    <button id="triggerOrder" {#if cart.cartIsEmpty}disabled{/if} style="height: 30px; align-self: center;">
         Checkout
     </button>
 </div>
