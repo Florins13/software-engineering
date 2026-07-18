@@ -54,7 +54,6 @@ public class BikeController {
         List<BikeDTO> bikes = bikeService.getAllBikes().stream()
                 .map(BikeDTO::new)
                 .collect(Collectors.toList());
-//        bikes.forEach(bike -> bike.imageSource = "images/" + bike.imageSource);
         model.addAttribute("bikes", bikes);
         return "bikes";
     }
