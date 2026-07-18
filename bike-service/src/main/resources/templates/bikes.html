@@ -7,7 +7,7 @@
     <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-evenly;">
         <div th:each="bike : ${bikes}" class="bike__box">
             <h4>Model: <span th:text="${bike.model}">Bike Model</span></h4>
-            <img th:src="@{'http://localhost:8081/images/' + ${bike.imageSource}}" height="70" width="70" th:alt="${bike.model}"/>
+            <img th:src="${bike.imageSource}" height="70" width="70" th:alt="${bike.model}"/>
             <span>Stock: <span th:text="${bike.availableStock}">0</span></span>
             <span>Details: <span th:text="${bike.details}">Details</span></span>
             <span>Electric: <span th:text="${bike.electric} ? 'Yes' : 'No'">No</span></span>

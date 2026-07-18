@@ -37,7 +37,6 @@ public class CartController {
         CartDTO cartDTO = new CartDTO(cartModel);
         return Response.ok(cart
                 .data("cart", cartDTO)
-                .data("bikeImageBase", "http://localhost:8082/")
                 .render()).build();
     }
 
