@@ -13,7 +13,7 @@
             <span>Electric: <span th:text="${bike.electric} ? 'Yes' : 'No'">No</span></span>
             <span>Price: <span th:text="${bike.price}">0.0</span>€</span>
 
-            <button th:disabled="${!bike.inStock}" th:attr="mfe-id=${bike.id}">Add to cart</button>
+            <button class="btn" th:disabled="${!bike.inStock}" th:attr="mfe-id=${bike.id}">Add to cart</button>
         </div>
     </div>
 </main>

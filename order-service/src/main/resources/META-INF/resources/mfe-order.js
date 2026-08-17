@@ -1,9 +1,6 @@
 console.log("Loading script of mfe3!")
 
-const mfeTriggerBikeEvent = "triggerBikeEvent";
-const mfeTriggerCartEvent = "triggerCartEvent";
-
-mfe("mfe3", ({root, triggerMfeEvent, listenMfeEvent, mfeEvents, reloadMfe}) => {
+mfe("mfe3", ({root, reloadMfe}) => {
     const form = root.querySelector("form[action='/order/finalise']");
 
     if (form) {
@@ -30,6 +27,7 @@ mfe("mfe3", ({root, triggerMfeEvent, listenMfeEvent, mfeEvents, reloadMfe}) => {
 
                 if (response.ok) {
                     console.log("Order finalised successfully");
+                    reloadMfe()
                 } else {
                     const err = await response.json().catch(() => ({}));
                     console.error("Finalise order failed:", response.status, err);
@@ -39,9 +37,4 @@ mfe("mfe3", ({root, triggerMfeEvent, listenMfeEvent, mfeEvents, reloadMfe}) => {
             }
         });
     }
-
-    listenMfeEvent(() => {
-        triggerMfeEvent("trigger bike event", { type: mfeEvents.RELOAD }, mfeTriggerBikeEvent);
-        triggerMfeEvent("trigger cart event", { type: mfeEvents.RELOAD }, mfeTriggerCartEvent);
-    });
 })

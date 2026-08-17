@@ -23,7 +23,7 @@
 
 <div style="display: flex; flex-direction: row; justify-content: center; gap: 5px;">
     <h3>Total: {cart.cartTotal} €</h3>
-    <button id="triggerOrder" {#if cart.cartIsEmpty}disabled{/if} style="height: 30px; align-self: center;">
+    <button id="triggerOrder" class="btn" {#if cart.cartIsEmpty}disabled{/if} style="height: 30px; align-self: center;">
         Checkout
     </button>
 </div>

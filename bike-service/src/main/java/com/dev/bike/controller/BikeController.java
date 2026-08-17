@@ -75,7 +75,7 @@ public class BikeController {
 
         List<BikeDTO> bikes = bikeService.getAllBikes().stream()
                 .map(BikeDTO::new)
-                .collect(Collectors.toList());
+                .toList();
 
         StreamingResponseBody body = output -> {
             try (Writer writer = new OutputStreamWriter(output, StandardCharsets.UTF_8)) {
@@ -115,9 +115,7 @@ public class BikeController {
                     </div>
 
                     <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-evenly;">
-                    <template shadowrootmode="open">
                         <slot name="bike"></slot>
-                    </template>
                 """);
     }
 

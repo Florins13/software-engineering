@@ -1,7 +1,7 @@
 console.log("Loading script of mfe2!")
 
 
-mfe('mfe2', ({ root, triggerMfeEvent, listenMfeEvent, reloadMfe, mfeEvents }) => {
+mfe('mfe2', ({ root, listenMfeEvent, reloadMfe }) => {
     const checkoutButton = root?.querySelector('#triggerOrder');
     const increaseQuantity = root?.querySelectorAll('#increaseQuantity');
     const decreaseQuantity = root?.querySelectorAll('#decreaseQuantity');
@@ -9,7 +9,6 @@ mfe('mfe2', ({ root, triggerMfeEvent, listenMfeEvent, reloadMfe, mfeEvents }) =>
 
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
-            // finalizeOrder().then(() => triggerMfeEvent('trigger order event', {type: mfeEvents.RELOAD}));
             window.location.href = '/checkout';
         });
     }
